@@ -1,0 +1,21 @@
+This project is a public release of the evaluation of the dedicated EXI grammar
+generator implemented as part of the EXIP library. The grammar generator accepts
+EXI encoded XML Schema definitions as an input
+A set of 5 XML schema documents (available in the Schemas folder) are used for decoding 15 instances
+(XML examples that conform to the schemas and available in XML-Instances folder; 3 instances per
+each schema document) by 3 different EXI processors - EXIficient v0.9.1 Java,
+OpenEXI v1.0238.0 Java, and EXIP v0.5.1 C.
+The EXI encoded XML instance documents are located in EXI-Output.
+The XML schema documents are: netconf.xsd, SenML.xsd, sep.xsd, OPC-UA-Types.xsd,
+and XMLSchema.xsd. All of them are accessed from the local hard-drive,
+including the imported XML schema files, so there were no dependencies on the
+network performance.
+
+The Tests folder contains the 3 implementations and 2 bash scripts for compiling
+the sources of the 3 EXI processors (compileAll.sh) and running the evaluation (run-eval.sh).
+
+The run-eval.sh script creates a CSV file called evaluation.csv which contains the
+times to generate the EXI grammars dynamically for each processor and for each
+XML Schema and the times to process the instances. All times are in nanoseconds.
+Each row is one run of the evaluation for one instance.
+The number of runs can be set in run-eval.sh by changing the value of NUMBER_OF_RUNS variable.
