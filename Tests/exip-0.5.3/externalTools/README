@@ -1,0 +1,5 @@
+This is a binary package provided by OpenEXI project.
+The binaries in this folder are released under Apache Software License V2.0
+
+To start the OpenEXIGUI run:
+java -jar OpenEXIGUI.jar
