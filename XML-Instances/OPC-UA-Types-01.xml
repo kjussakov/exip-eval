@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:Node xmlns:tns="http://opcfoundation.org/UA/2008/02/Types.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://opcfoundation.org/UA/2008/02/Types.xsd ../Schemas/OPC-UA-Types.xsd " xsi:type="tns:Node">
+  <tns:NodeId>
+    <tns:Identifier>tns:Identifier</tns:Identifier>
+  </tns:NodeId>
+  <tns:NodeClass>Unspecified_0</tns:NodeClass>
+  <tns:BrowseName>
+    <tns:NamespaceIndex>0</tns:NamespaceIndex>
+    <tns:Name>tns:Name</tns:Name>
+  </tns:BrowseName>
+  <tns:DisplayName>
+    <tns:Locale>tns:Locale</tns:Locale>
+    <tns:Text>tns:Text</tns:Text>
+  </tns:DisplayName>
+  <tns:Description>
+    <tns:Locale>tns:Locale</tns:Locale>
+    <tns:Text>tns:Text</tns:Text>
+  </tns:Description>
+  <tns:WriteMask>0</tns:WriteMask>
+  <tns:UserWriteMask>0</tns:UserWriteMask>
+  <tns:References>
+    <tns:ReferenceNode/>
+  </tns:References>
+</tns:Node>

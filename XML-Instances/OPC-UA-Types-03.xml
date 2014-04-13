@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:StatusCode xmlns:tns="http://opcfoundation.org/UA/2008/02/Types.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://opcfoundation.org/UA/2008/02/Types.xsd OPC-UA-Types.xsd ">
+  <tns:Code>0</tns:Code>
+</tns:StatusCode>

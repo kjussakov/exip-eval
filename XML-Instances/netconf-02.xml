@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:rpc-error xmlns:p="urn:ietf:params:xml:ns:netconf:base:1.0" xmlns:xml="http://www.w3.org/XML/1998/namespace" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:ietf:params:xml:ns:netconf:base:1.0 ../Schemas/netconf.xsd ">
+  <p:error-type>transport</p:error-type>
+  <p:error-tag>in-use</p:error-tag>
+  <p:error-severity>error</p:error-severity>
+  <p:error-app-tag>p:error-app-tag</p:error-app-tag>
+  <p:error-path>p:error-path</p:error-path>
+  <p:error-message>p:error-message</p:error-message>
+  <p:error-info>
+    <p:session-id>0</p:session-id>
+  </p:error-info>
+</p:rpc-error>

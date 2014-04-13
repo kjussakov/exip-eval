@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:hello xmlns:p="urn:ietf:params:xml:ns:netconf:base:1.0" xmlns:xml="http://www.w3.org/XML/1998/namespace" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:ietf:params:xml:ns:netconf:base:1.0 ../Schemas/netconf.xsd ">
+  <p:capabilities>
+    <p:capability>http://tempuri.org</p:capability>
+  </p:capabilities>
+</p:hello>
