@@ -4,7 +4,7 @@ EXI encoded XML Schema definitions as an input
 A set of 5 XML schema documents (available in the Schemas folder) are used for decoding 15 instances
 (XML examples that conform to the schemas and available in XML-Instances folder; 3 instances per
 each schema document) by 3 different EXI processors - EXIficient v0.9.1 Java,
-OpenEXI v1.0238.0 Java, and EXIP v0.5.1 C.
+OpenEXI v1.0238.0 Java, and EXIP v0.5.3 C.
 The EXI encoded XML instance documents are located in EXI-Output.
 The XML schema documents are: netconf.xsd, SenML.xsd, sep.xsd, OPC-UA-Types.xsd,
 and XMLSchema.xsd. All of them are accessed from the local hard-drive,

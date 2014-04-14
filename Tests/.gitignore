@@ -1,2 +1,6 @@
 /.~lock.evaluation-bak.csv#
 *.sh~
+*.~lock.evaluation.csv#
+/outputEXIFicient.xml
+/outputEXIP.xml
+/outputOpenEXI.xml
