@@ -1,6 +1,6 @@
 #!/bin/bash
 
-NUMBER_OF_RUNS=1
+NUMBER_OF_RUNS=100
 
 echo "This script runs the evaluation experiment"
 echo "It decodes 3 instances for each of the 5 XML schemas by EXIP, EXIFicient and OpenEXI"

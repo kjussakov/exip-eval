@@ -19,3 +19,18 @@ times to generate the EXI grammars dynamically for each processor and for each
 XML Schema and the times to process the instances. All times are in nanoseconds.
 Each row is one run of the evaluation for one instance.
 The number of runs can be set in run-eval.sh by changing the value of NUMBER_OF_RUNS variable.
+
+The compileAll.sh sets -O0 flag to gcc compiler (i.e. no compile time optimizations).
+For compiling exip with optimizations (i.e. -O3 flag) use compileAllOptimize.sh
+
+By default run-eval.sh executes OpenEXI and EXIficient tests in a fresh JVM and thus
+the JVM runs the tests with limited run-time optimizations (such as JIT) as the JVM
+cannot gain enough statistics for performing code optimizations.
+
+When passing optimize parameter to run-eval.sh script (i.e. ./run-eval.sh optimize)
+Each decoding test in OpenEXI and EXIficient is executed 5 times before the
+timed decoding is performed thus the JVM has enough statistic to perform
+run-time optimizations on the code.
+
+For comparing in a optimization scenario use compileAllOptimize.sh to compile
+and ./run-eval.sh optimize to run the tests as opposed to compileAll.sh and run-eval.sh.
