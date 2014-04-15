@@ -1,6 +1,6 @@
 #!/bin/bash
 
-NUMBER_OF_RUNS=100
+NUMBER_OF_RUNS=1
 
 echo "This script runs the evaluation experiment"
 echo "It decodes 3 instances for each of the 5 XML schemas by EXIP, EXIFicient and OpenEXI"
@@ -11,8 +11,8 @@ printf "\n"
 
 #EXI processors binaries
 EXIP="exip-0.5.3/bin/examples/exipd"
-EXIFicient="EXIFicient/run-exificient.sh"
-OpenEXI="OpenEXI/run-OpenEXIDecode.sh"
+EXIFicient="./run-exificient.sh"
+OpenEXI="./run-OpenEXIDecode.sh"
 
 #XML Schemas
 SchemaNetconf="../Schemas/netconf.xsd"
@@ -84,50 +84,50 @@ do
       echo "INSTANCE $j"
 
       #--OpenEXI netconf 0$j 
-      $OpenEXI $SchemaNetconf ${NetConf[j]} >> evaluation.csv
+      $OpenEXI $SchemaNetconf ${NetConf[j]} $1 >> evaluation.csv
       printf " ; " >> evaluation.csv
       #--EXIFicient netconf 0$j
-      $EXIFicient $SchemaNetconf ${NetConf[j]} >> evaluation.csv
+      $EXIFicient $SchemaNetconf ${NetConf[j]} $1 >> evaluation.csv
       printf " ; " >> evaluation.csv
       #--exip netconf 0$j
       $EXIP -xml -schema=$SchemaNetconfEXI,$SchemaXMLSchemaXMLXSDEXI ${NetConf[j]} >> evaluation.csv
       printf " ; " >> evaluation.csv
       
       #--OpenEXI SenML 0$j
-      $OpenEXI $SchemaSenML ${SenML[j]} >> evaluation.csv
+      $OpenEXI $SchemaSenML ${SenML[j]} $1 >> evaluation.csv
       printf " ; " >> evaluation.csv
       #--EXIFicient SenML 0$j
-      $EXIFicient $SchemaSenML ${SenML[j]} >> evaluation.csv
+      $EXIFicient $SchemaSenML ${SenML[j]} $1 >> evaluation.csv
       printf " ; " >> evaluation.csv
       #--exip SenML 0$j
       $EXIP -xml -schema=$SchemaSenMLEXI ${SenML[j]} >> evaluation.csv
       printf " ; " >> evaluation.csv
 
       #--OpenEXI SEP2 0$j
-      $OpenEXI $SchemaSEP ${SEP2[j]} >> evaluation.csv
+      $OpenEXI $SchemaSEP ${SEP2[j]} $1 >> evaluation.csv
       printf " ; " >> evaluation.csv
       #--EXIFicient SEP2 0$j
-      $EXIFicient $SchemaSEP ${SEP2[j]} >> evaluation.csv
+      $EXIFicient $SchemaSEP ${SEP2[j]} $1 >> evaluation.csv
       printf " ; " >> evaluation.csv
       #--exip SEP2 0$j
       $EXIP -xml -schema=$SchemaSEPEXI ${SEP2[j]} >> evaluation.csv
       printf " ; " >> evaluation.csv
 
       #--OpenEXI OPCUA 0$j
-      $OpenEXI $SchemaOPC ${OPCUA[j]} >> evaluation.csv
+      $OpenEXI $SchemaOPC ${OPCUA[j]} $1 >> evaluation.csv
       printf " ; " >> evaluation.csv
       #--EXIFicient OPCUA 0$j
-      $EXIFicient $SchemaOPC  ${OPCUA[j]} >> evaluation.csv
+      $EXIFicient $SchemaOPC  ${OPCUA[j]} $1 >> evaluation.csv
       printf " ; " >> evaluation.csv
       #--exip OPCUA 0$j
       $EXIP -xml -schema=$SchemaOPCEXI  ${OPCUA[j]} >> evaluation.csv
       printf " ; " >> evaluation.csv
 
       #--OpenEXI XML Schema 0$j
-      $OpenEXI $SchemaXMLSchema ${XMLSchema[j]} >> evaluation.csv
+      $OpenEXI $SchemaXMLSchema ${XMLSchema[j]} $1 >> evaluation.csv
       printf " ; " >> evaluation.csv
       #--EXIFicient XML Schema 0$j
-      $EXIFicient $SchemaXMLSchema ${XMLSchema[j]} >> evaluation.csv
+      $EXIFicient $SchemaXMLSchema ${XMLSchema[j]} $1 >> evaluation.csv
       printf " ; " >> evaluation.csv
       #--exip XML Schema 0$j
       $EXIP -xml -schema=$SchemaXMLSchemaEXI,$SchemaXMLSchemaXMLXSDEXI ${XMLSchema[j]} >> evaluation.csv

@@ -141,8 +141,6 @@ public class DecodeEXI {
             }            
             
             File inputFile = new File(sourceFile);
-            in = new FileInputStream(inputFile);
-            out = new FileWriter(destinationFile);
 
 // Set the schema and EXI Options in the Grammar Cache.
             FileInputStream fis = null;
@@ -150,64 +148,77 @@ public class DecodeEXI {
             
     // Create a schema and set it to null. If useSchema == "None" it remains null.
             EXISchema schema = null;
+
+            int repetitions = 1;
+            if(OpenEXIDecode.optimize)
+                repetitions = 6;
             
-            long startTime = System.nanoTime();
+            long startTime = 0;
+            long endTimeSchema = 0;
+            long endTimeALL = 0;
+
+            for(int i = 0; i < repetitions; i++)
+            {
+                in = new FileInputStream(inputFile);
+                out = new FileWriter(destinationFile);
             
-    // If using an XSD, it must be converted to an EXISchema.
-            if(useSchema.equals("XSD")) {
-                try {
-                    InputSource is = new InputSource(schemaFileName);
-                    EXISchemaFactory factory = new EXISchemaFactory();
-                    schema = factory.compile(is); 
+                startTime = System.nanoTime();
+                
+        // If using an XSD, it must be converted to an EXISchema.
+                if(useSchema.equals("XSD")) {
+                    try {
+                        InputSource is = new InputSource(schemaFileName);
+                        EXISchemaFactory factory = new EXISchemaFactory();
+                        schema = factory.compile(is); 
+                    }
+                    finally {
+                        if (fis != null) fis.close();
+                        if (dis != null) dis.close();
+                    }
                 }
-                finally {
-                    if (fis != null) fis.close();
-                    if (dis != null) dis.close();
+        // If using an ESD, it can be read directly.            
+                if (useSchema.equals("ESD")) {
+                    try {
+                        fis = new FileInputStream(exiSchemaFileName);
+                        dis = new DataInputStream(fis);
+                        schema = EXISchema.readIn(dis);
+                    }
+                    finally {
+                        if (fis != null) fis.close();
+                        if (dis != null) dis.close();
+                    }
                 }
+                grammarCache = new GrammarCache(schema, options);
+
+                
+                endTimeSchema = System.nanoTime();
+                
+    // Use the Grammar Cache to set the schema and grammar options for EXIReader.
+                reader.setEXISchema(grammarCache);
+                
+    // Let the reader know whether this is an XML fragment rather than a well-formed document. 
+                reader.setFragment(fragment);
+
+    // Prepare to send the results from the transformer to a StringWriter object.
+                transformerHandler.setResult(new StreamResult(stringWriter));
+                               
+    // Assign the transformer handler to interpret XML content.
+                reader.setContentHandler(transformerHandler);
+                
+    // Parse the file information.
+                reader.parse(new InputSource(in));
+
+    // Get the resulting string, write it to the output file, and flush the buffer contents.
+                final String reconstitutedString;
+                reconstitutedString = stringWriter.getBuffer().toString();
+                out.write(reconstitutedString);
+                out.flush();
+
+                in.close();
+                out.close();
+                
+                endTimeALL = System.nanoTime();
             }
-    // If using an ESD, it can be read directly.            
-            if (useSchema.equals("ESD")) {
-                try {
-                    fis = new FileInputStream(exiSchemaFileName);
-                    dis = new DataInputStream(fis);
-                    schema = EXISchema.readIn(dis);
-                }
-                finally {
-                    if (fis != null) fis.close();
-                    if (dis != null) dis.close();
-                }
-            }
-            grammarCache = new GrammarCache(schema, options);
-
-            
-            long endTimeSchema = System.nanoTime();
-            
-// Use the Grammar Cache to set the schema and grammar options for EXIReader.
-            reader.setEXISchema(grammarCache);
-            
-// Let the reader know whether this is an XML fragment rather than a well-formed document. 
-            reader.setFragment(fragment);
-
-// Prepare to send the results from the transformer to a StringWriter object.
-            transformerHandler.setResult(new StreamResult(stringWriter));
-            
-// Read the file into a byte array.
-            byte fileContent[] = new byte[(int)inputFile.length()];
-            in.read(fileContent);
-            
-// Assign the transformer handler to interpret XML content.
-            reader.setContentHandler(transformerHandler);
-            
-// Parse the file information.
-            reader.parse(new InputSource(new ByteArrayInputStream(fileContent)));
-
-// Get the resulting string, write it to the output file, and flush the buffer contents.
-            final String reconstitutedString;
-            reconstitutedString = stringWriter.getBuffer().toString();
-            out.write(reconstitutedString);
-            out.flush();
-            
-            long endTimeALL = System.nanoTime();
             
 			long durationSchema = endTimeSchema - startTime;
 			long durationALL = endTimeALL - startTime;

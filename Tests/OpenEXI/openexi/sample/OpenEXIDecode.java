@@ -14,18 +14,25 @@ public final class OpenEXIDecode {
 	static String OUTPUT_FILE = "outputOpenEXI.xml";
 	static String INPUT_FILE = "./sample-data/Profile/indexed-01.exi%%vi%%%%";
 	static String SCHEMA = "./sample-data/Profile/indexed.xsd";
+    public static boolean optimize = false;
 
 	public static void main(String[] args) throws Exception {
 		if (args.length > 1) {
-			OpenEXIDecode.INPUT_FILE = args[0];
-			OpenEXIDecode.SCHEMA = args[1];
+            OpenEXIDecode.SCHEMA = args[0];			
+            OpenEXIDecode.INPUT_FILE = args[1];
+			
 //			System.out.println("IN: " + OpenEXIDecode.INPUT_FILE + " SCHEM: " + OpenEXIDecode.SCHEMA);
 		} else {
 			System.out.println("# EXIficient Sample, no input files specified");
 			System.out.println("Usage: " + OpenEXIDecode.class.getName()
-					+ " xmlFile xsdFile [NumberOfRuns]");
+					+ " xsdFile xmlFile [optimize]");
 			System.exit(1);
 		}
+
+        if(args.length == 3 && args[2].equals("optimize"))
+        {            
+            optimize = true;
+        }
 		
 		// Instantiate the example class DecodeEXI
         DecodeEXI decode = new DecodeEXI();

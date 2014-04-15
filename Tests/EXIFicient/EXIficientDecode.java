@@ -29,51 +29,64 @@ public final class EXIficientDecode {
 
 	public static void main(String[] args) throws Exception {
 		if (args.length > 1) {
-			EXIficientDecode.INPUT_FILE = args[0];
-			EXIficientDecode.SCHEMA = args[1];
+			EXIficientDecode.SCHEMA = args[0];
+			EXIficientDecode.INPUT_FILE = args[1];
+
 //			System.out.println("IN: " + EXIficientDecode.INPUT_FILE + " SCHEM: " + EXIficientDecode.SCHEMA);
 		} else {
 			System.out.println("# EXIficient Sample, no input files specified");
 			System.out.println("Usage: " + EXIficientDecode.class.getName()
-					+ " xmlFile xsdFile [NumberOfRuns]");
+					+ " xsdFile xmlFile [optimize]");
 			System.exit(1);
 		}
 		
 		File xsdFile = new File(EXIficientDecode.SCHEMA);
 		if (xsdFile.exists())
 		{
+            int repetitions = 1;
+            if(args.length == 3 && args[2].equals("optimize"))
+            {            
+                repetitions = 6;
+            }
 //			System.out.println("SchemaInformed: \n");
-			long startTime = System.nanoTime();
-			
-			EXIFactory exiFactory = DefaultEXIFactory.newInstance();
-//			exiFactory.setFidelityOptions(FidelityOptions.createStrict());
-//			exiFactory.setMaximumNumberOfEvolvingBuiltInElementGrammars(0);
-//			exiFactory.setMaximumNumberOfBuiltInProductions(0);
-//			exiFactory.setLocalValuePartitions(false);
-			
-			GrammarFactory grammarFactory = GrammarFactory.newInstance();
-			Grammars g = grammarFactory.createGrammars(EXIficientDecode.SCHEMA);
-			exiFactory.setGrammars(g);
-			
-			long endTimeSchema = System.nanoTime();
-			
-			EXISource saxSource = new EXISource(exiFactory);
-			XMLReader xmlReader = saxSource.getXMLReader();
-			TransformerFactory tf = TransformerFactory.newInstance();
-			Transformer transformer = tf.newTransformer();
 
-			InputStream exiIS = new FileInputStream(EXIficientDecode.INPUT_FILE);
-			SAXSource exiSource = new SAXSource(new InputSource(exiIS));
-			exiSource.setXMLReader(xmlReader);
+            long startTime = 0;
+            long endTimeSchema = 0;
+            long endTimeAll = 0;
+            for(int i = 0; i < repetitions; i++)
+            {
+			    startTime = System.nanoTime();
+			
+			    EXIFactory exiFactory = DefaultEXIFactory.newInstance();
+    //			exiFactory.setFidelityOptions(FidelityOptions.createStrict());
+    //			exiFactory.setMaximumNumberOfEvolvingBuiltInElementGrammars(0);
+    //			exiFactory.setMaximumNumberOfBuiltInProductions(0);
+    //			exiFactory.setLocalValuePartitions(false);
+			
+			    GrammarFactory grammarFactory = GrammarFactory.newInstance();
+			    Grammars g = grammarFactory.createGrammars(EXIficientDecode.SCHEMA);
+			    exiFactory.setGrammars(g);
+			
+			    endTimeSchema = System.nanoTime();
+			
+			    EXISource saxSource = new EXISource(exiFactory);
+			    XMLReader xmlReader = saxSource.getXMLReader();
+			    TransformerFactory tf = TransformerFactory.newInstance();
+			    Transformer transformer = tf.newTransformer();
 
-			OutputStream os = new FileOutputStream(EXIficientDecode.OUTPUT_FILE);
-			transformer.transform(exiSource, new StreamResult(os));
-			os.close();
+			    InputStream exiIS = new FileInputStream(EXIficientDecode.INPUT_FILE);
+			    SAXSource exiSource = new SAXSource(new InputSource(exiIS));
+			    exiSource.setXMLReader(xmlReader);
+
+			    OutputStream os = new FileOutputStream(EXIficientDecode.OUTPUT_FILE);
+			    transformer.transform(exiSource, new StreamResult(os));
+			    os.close();
 			
-			long endTimeAll = System.nanoTime();
-			
-			long durationSchema = endTimeSchema - startTime;
-			long durationALL = endTimeAll - startTime;
+			    endTimeAll = System.nanoTime();
+			}
+
+		    long durationSchema = endTimeSchema - startTime;
+		    long durationALL = endTimeAll - startTime;
 			
 			System.out.print(durationSchema + " ; ");
 			System.out.print(durationALL);

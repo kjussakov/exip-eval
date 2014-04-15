@@ -5,7 +5,7 @@ COMPILER = gcc
 ARCHIVER = ar
 
 # Debug flags if any
-DEBUGGING = -O0 -g #-fno-stack-protector
+DEBUGGING ?= -O0 -g #-fno-stack-protector
 
 # Warning flags
 WARNING = -Wpacked -Wall
