@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# NUMBER_OF_RUNS sets the number of times each XML instance is run.
+# As there are 3 inctances per schema the total number of runs per schema is 3*NUMBER_OF_RUNS
 NUMBER_OF_RUNS=100
 
 echo "This script runs the evaluation experiment"
